@@ -3,20 +3,21 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 export default function App() {
-  const [enteredText,SetText] = useState();
+  const [enteredText,setText] = useState('');
+  const [currentElement,setElement] = useState([]);
   const textHandler = (inputText) => {
- SetText(inputText);
+    setText(inputText);
 };
 const printHandler = () => {
-console.log(enteredText);
+setElement(currentElement => [...currentElement,enteredText]);
 };
   return (
     <View style={styles.screen}>
       <View style={styles.inputView}>
-        <TextInput placeholder='Goal Name' style={styles.input} onChangeText={textHandler} value = {enteredText} />
+        <TextInput placeholder='Goal Name' style={styles.input} onChangeText={textHandler} value = {enteredText } />
         <Button title='Add' onPress = {printHandler}/>
       </View>
-      <View></View>
+  <View><Text>{currentElement}</Text></View>
     </View>
   );
 }
