@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [enteredText,setText] = useState('');
@@ -9,7 +9,8 @@ export default function App() {
     setText(inputText);
 };
 const printHandler = () => {
-setElement(currentElement => [...currentElement,enteredText]);
+setElement(currentElement => [...currentElement,
+  {id: Math.random.toString(), value:enteredText}]);
 };
   return (
     <View style={styles.screen}>
@@ -22,7 +23,13 @@ setElement(currentElement => [...currentElement,enteredText]);
       </View>
        <ScrollView>
   <View>
-    {currentElement.map((goal) => <View style={styles.listView}><Text key={goal}>{goal}</Text></View>)} 
+
+    <FlatList keyExtractor = {(item, index)=> item.id} 
+    data ={currentElement} 
+    renderItem={itemdata => (<View style={styles.listView}>
+      <Text>{itemdata.item.value}</Text>
+    </View>)} />
+  
     </View>
     </ScrollView>
     </View>
